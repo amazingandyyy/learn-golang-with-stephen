@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -11,7 +13,7 @@ func newDeck() deck {
 	cards := deck{}
 
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Cluster"}
-	cardValue := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"}
+	cardValue := []string{"Ace", "Two", "Three", "Four"}
 
 	for _, suit := range cardSuits {
 		for _, value := range cardValue {
@@ -32,5 +34,27 @@ func deal(d deck, handSize int) (deck, deck) {
 }
 
 func (d deck) toString() string {
-	return strings.Join([]string(d), ",")
+	return strings.Join([]string(d), ", ")
+}
+
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(
+		filename,
+		[]byte(d.toString()),
+		0666,
+	)
+}
+
+func newDeckFromFile(filename string) deck {
+	// bs: a syte slice
+	bs, err := ioutil.ReadFile(
+		filename,
+	)
+	if err != nil {
+		fmt.Println("Error", err)
+		os.Exit(1)
+	}
+
+	s := strings.Split(string(bs), ", ") // return []string
+	return deck(s)                       // convert to deck type to take advantge of those associated functions
 }
