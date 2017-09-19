@@ -28,9 +28,14 @@ func main() {
 			zipCode: 94039,
 		},
 	}
-	jimpointer := &jim // get access to memory address
-	jimpointer.updateName("jimmy")
-	jimpointer.print()
+	// version 1
+	// jimpointer := &jim // get access to memory address
+	// jimpointer.updateName("jimmy")
+	// jimpointer.print()
+
+	// shortcut version
+	jim.updateName("jimmy")
+	jim.print()
 }
 
 // *person -> the star is not an "operator" -> it means we are working with a pointer to a person
