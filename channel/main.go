@@ -17,11 +17,10 @@ func main() {
 	for _, l := range links {
 		go check(l, c)
 	}
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
+
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c)
+	}
 }
 
 func check(link string, c chan string) {
